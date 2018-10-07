@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
+import { Route, Redirect } from 'react-router-dom';
+
+import Home from './pages/Home';
 
 class App extends Component {
   render() {
     return (
       <div>
-        <h1>Hello World</h1>
+        <Route path="/home" component={Home} />
+
+        <Route exact path="/" render={() => (
+          <Redirect to="/home" />
+        )} />
       </div>
     );
   }
