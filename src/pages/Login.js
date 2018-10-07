@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import fire from '../config/fire';
+
+import { Redirect } from 'react-router-dom'; 
 
 class Login extends Component {
   state = {
     email: '',
     password: '',
+    isAuthenticated: false,
   };
 
   handleChange = (event) => {
@@ -13,7 +17,24 @@ class Login extends Component {
     });
   };
 
+  login = (event) => {
+    event.preventDefault();
+    fire.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+    .then((u)=>{
+      this.setState({ isAuthenticated: true });
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+  }
+
   render() {
+    if (this.state.isAuthenticated) {
+      return (
+        <Redirect to="/home" />
+      );
+    }
+
     return (
       <div className="col-md-6">
         <h1>Login page</h1>
@@ -26,7 +47,7 @@ class Login extends Component {
             <label htmlFor="inputPassword">Password</label>
             <input onChange={this.handleChange} type="password" id="inputPassword" className="form-control" placeholder="Password" value={this.state.password} />
           </div>
-          <button type="submit" className="btn btn-primary">Login</button>
+          <button onClick={this.login} type="submit" className="btn btn-primary">Login</button>
           <Link to="/register">Need an account? Click to register</Link>
         </form>
       </div>
