@@ -6,6 +6,7 @@ import fire from './config/fire';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Logout from './components/Logout';
 
 class App extends Component {
   state = {
@@ -31,6 +32,7 @@ class App extends Component {
 
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
+        <Route path="/logout" component={Logout} />
 
         <Route exact path="/" render={() => (
           <Redirect to="/home" />
